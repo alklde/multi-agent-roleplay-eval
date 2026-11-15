@@ -101,7 +101,7 @@ history:
 
 target:
   role_id: R1
-  test_question: 周老师，帖子里的数据和通报对不上，你们核查以哪个为准？我们还能不能照常喝？
+  test_question: 周老师，网上说的和通报不一样，到底该信哪个？我们还能不能照常喝水？
   intent: 想在两种互相矛盾的说法中确认哪一份可信，并据此决定今晚怎么给孩子冲奶粉
   target_dimensions: [fact, role]
 

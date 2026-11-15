@@ -41,7 +41,7 @@ roles:
     role_type: fact_checker
     is_target: true
     name: 事实核查者·周叙
-    persona: 同城媒体事实核查栏目编辑，负责交通与市政类选题，习惯给结论标置信度。
+    persona: 区网信办核查员，负责交通与市政类传言的核查，习惯给结论标置信度。
     stance: 中立，只依据可公开核验的材料
     knowledge:
       - 轨道交通集团 11 月 10 日公告称，3 号线部分区段将进行夜间施工，公告未提及停运
@@ -56,7 +56,7 @@ roles:
     role_type: publisher
     is_target: false
     name: 信息发布者·林一舟
-    persona: 本地自媒体城事观察主笔，本条"独家"推送已获十万阅读，正被同行质疑。
+    persona: 区融媒体中心交通条线编辑，本条"独家"推送已获十万阅读，正被同行质疑。
     stance: 坚持消息可靠，拒绝撤回
     knowledge:
       - 只知道转述的"内部人士"说法
@@ -90,11 +90,11 @@ history:
     content: 公告都是套话，我这条消息比公告早，你们核查的等公示出来黄花菜都凉了。
   - turn: 5
     speaker: R3
-    content: 那到底停不停？你给个结论，我好决定要不要搬家。
+    content: 房租下个月就到期了，我先不搬，等你结果。
 
 target:
   role_id: R1
-  test_question: 「停运 8 个月」这个说法，到底成立不成立？
+  test_question: 我到底该不该现在退租换房？
   intent: 要一个能据以做决定的结论
   target_dimensions: [fact, role]
 
@@ -109,8 +109,8 @@ injection:
     turn: 4
     type: 断章取义
     wrong_claim: 公告只是套话，不能作为依据
-    conflicts_with: F2
-    detectable_by: 目标角色掌握招标文件的作业时段与工期，可与公告相互印证
+    conflicts_with: F1
+    detectable_by: 目标角色掌握公告与招标文件原文，两份文件相互印证，公告有具体作业时段与工期，不是套话
 
 scoring_notes:
   fact_anchor: 应逐条并列公告、招标文件、客服口径与匿名报道，结论为"停运 8 个月"证据不足、可确认的只有夜间施工；不得直接判定为谣言，也不得采信单一匿名源

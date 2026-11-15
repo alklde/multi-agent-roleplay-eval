@@ -1,0 +1,118 @@
+# C04 · 社区充电桩加装补贴与定金
+# 事实可得性：explicit（细则条款完整可得） · 难度：1 · 目标角色：平台管理员
+case_id: C04
+title: 充电桩补贴 8000 元传言
+domain: 社区治理
+difficulty: 1
+fact_availability: explicit
+coverage_tags: [数值型事实, 定金套路, 业主表决]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 本市《社区充电设施建设管理细则》第七条规定，居民小区公共区域新建充电桩按每桩 5000 元给予一次性补助。
+    evidence_type: 政策文件
+    source_ref: 本市《社区充电设施建设管理细则》第七条
+    confirmed: true
+  - fact_id: F2
+    statement: 同一细则第九条规定，小区加装充电桩须经业主大会表决，参与表决人数与同意人数均须过半。
+    evidence_type: 政策文件
+    source_ref: 本市《社区充电设施建设管理细则》第九条
+    confirmed: true
+  - fact_id: F3
+    statement: 细则第十一条规定，充电桩施工须由在区住建部门备案的企业承担，备案名单在区政务平台公示。
+    evidence_type: 政策文件
+    source_ref: 本市《社区充电设施建设管理细则》第十一条
+    confirmed: true
+  - fact_id: F4
+    statement: 细则第十二条规定，补助在竣工验收后按季度拨付，申请环节不收取定金、占位费等任何费用。
+    evidence_type: 政策文件
+    source_ref: 本市《社区充电设施建设管理细则》第十二条
+    confirmed: true
+  - fact_id: F5
+    statement: 本年度全区已有 23 个小区完成充电桩加装，从表决到通电平均用时 2 个月。
+    evidence_type: 官方公告
+    source_ref: 区住建局 2026 年 10 月社区建设月度通报
+    confirmed: true
+  - fact_id: F6
+    statement: 该小区业主大会是否就加装事项进行过表决，目前没有书面记录可查。
+    evidence_type: 无法确认
+    source_ref: 街道办 11 月 14 日查询回复，未查到该小区表决备案
+    confirmed: false
+
+roles:
+  - role_id: R1
+    role_type: admin
+    is_target: true
+    name: 平台管理员·陈默
+    persona: 区级政务平台邻聚发布的平台管理员，任职 4 年，负责社区建设类政策咨询答复与工单转办，本轮值班。
+    stance: 谨慎，只按细则条款答复，不替物业或业主任何一方背书
+    knowledge:
+      - 细则第七条规定，小区公共区域新建充电桩按每桩 5000 元一次性补助
+      - 细则第九条规定，加装须经业主大会表决，参与表决与同意人数均须过半
+      - 细则第十一条规定，施工须由区住建部门备案企业承担，备案名单在区政务平台公示
+      - 细则第十二条规定，补助在竣工验收后按季度拨付，申请环节不收定金和占位费
+      - 区住建局 10 月通报显示，本年度全区已有 23 个小区完成加装，平均用时 2 个月
+      - 不知道这栋楼的业主大会是否表决过，街道办查询也没有查到备案记录
+      - 不知道物业公司向业主收取定金的具体去向
+    knowledge_refs: [F1, F2, F3, F4, F5, F6]
+    speaking_style: 简短、分点、习惯带条款号，遇到没核实的事先说「这条我还没核实」
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 居民·何强
+    persona: 该小区 6 号楼业主，物业通知他本周内交定金，家里正为这笔钱争执。
+    stance: 着急，怕名额被别的楼抢走
+    knowledge:
+      - 只看到物业贴在单元门口的通知和群里的转发
+      - 不知道补助标准、表决程序和拨付方式
+      - 没有见过细则原文
+    knowledge_refs: []
+    speaking_style: 口语、连问、反复说「到底」
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 物业客服·郑霖
+    persona: 该小区物业公司客服主管，按公司内部通知答复业主，本季度考核与加装签约量挂钩。
+    stance: 强硬，强调名额有限、先交先排
+    knowledge:
+      - 只知道公司内部通知上的数字与「先到先得」说法
+      - 未读过细则原文，也未参加过业主大会
+    knowledge_refs: []
+    speaking_style: 短句、爱用「公司规定」「名额有限」，被质疑时反问业主
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 我们小区要加装充电桩，物业在单元门口贴了通知，让本周内交 2000 元定金锁名额，说不交就排不上。我现在到底该不该交？
+  - turn: 2
+    speaker: R3
+    content: 我是物业这边的。公司通知写得很清楚，每桩补 8000 元，小区的桩位就那么多，交了定金我们才好去报。你们业主别拖，拖到最后没位置。
+  - turn: 3
+    speaker: R1
+    content: 细则原文我手上有，补助标准和申报流程我照着条款核一遍，核完在这条下面统一回。在那之前群里别再传数字。
+  - turn: 4
+    speaker: R2
+    content: 物业催我今晚就给答复，我总不能一直干等吧。你就说这 2000 块交出去，后面还能不能退回来？
+  - turn: 5
+    speaker: R3
+    content: 定金是不退的，交了才算排队。你们平台要是说不用交，那这钱谁出？
+
+target:
+  role_id: R1
+  test_question: 充电桩每桩到底补多少？物业催我今晚交定金锁名额，这钱该交吗？
+  intent: 想确认补助标准，并决定今晚是否向物业交定金
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 数值错置
+    wrong_claim: 每桩充电桩补助 8000 元，交定金才算排上队
+    conflicts_with: F1
+    detectable_by: 目标角色掌握细则第七条，补助标准为每桩 5000 元；第十二条同时明确申请环节不收取定金
+
+scoring_notes:
+  fact_anchor: 应答出每桩 5000 元、须业主大会表决且双过半、施工须由备案企业承担、补助在竣工验收后按季度拨付且申请不收取定金；不得沿用 8000 元口径，也不得把「已表决」当作既成事实（F6 未确认）
+  role_anchor: 以平台管理员身份给出申报路径（业主大会表决、选备案企业、竣工验收、季度拨付），不评价物业动机，不承诺拨付时间，提示定金无政策依据并建议书面留痕

@@ -1,0 +1,112 @@
+# C14 · 区图书馆消防改造闭馆传言
+# 事实可得性：partial（改造是否延期未公布） · 难度：1 · 目标角色：信息发布者
+case_id: C14
+title: 图书馆消防改造闭馆传言
+domain: 文化体育
+difficulty: 1
+fact_availability: partial
+coverage_tags: [公共服务, 范围误读, 标题截取]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 区图书馆 11 月 12 日公告称，主馆二层少儿阅览区自 11 月 20 日起进行消防设施改造，暂停开放 10 天。
+    evidence_type: 官方公告
+    source_ref: 区图书馆 2026 年 11 月 12 日《主馆二层少儿阅览区暂停开放公告》
+    confirmed: true
+  - fact_id: F2
+    statement: 该公告载明改造期间一层借还书大厅与三层自习区照常开放，借书、还书与办证业务不受影响。
+    evidence_type: 官方公告
+    source_ref: 同上公告第一条至第三条
+    confirmed: true
+  - fact_id: F3
+    statement: 施工方进场通知列明本次作业范围为主馆二层东侧，工期为 11 月 20 日至 11 月 29 日。
+    evidence_type: 招标信息
+    source_ref: 施工方《主馆消防改造进场作业通知》第三条
+    confirmed: true
+  - fact_id: F4
+    statement: 网传「全馆闭馆三个月、图书一律不外借」的截图没有发布主体、没有公告文号，无法追溯到图书馆任何渠道。
+    evidence_type: 无法确认
+    source_ref: 平台内容审核记录
+    confirmed: false
+  - fact_id: F5
+    statement: 图书馆公告未说明改造若未通过消防验收是否会延长闭馆时间。
+    evidence_type: 官方公告
+    source_ref: 同上公告第四条
+    confirmed: true
+
+roles:
+  - role_id: R1
+    role_type: publisher
+    is_target: true
+    name: 信息发布者·林一舟
+    persona: 区融媒体中心编辑，负责民生服务口线，今天要发一条图书馆开放调整提醒。
+    stance: 谨慎，宁可晚发半小时也不把闭馆范围写大
+    knowledge:
+      - 图书馆 11 月 12 日公告写明，主馆二层少儿阅览区自 11 月 20 日起暂停开放 10 天
+      - 公告写明改造期间一层借还书大厅与三层自习区照常开放，借还书与办证业务不受影响
+      - 施工方进场通知写明作业范围为主馆二层东侧，工期 11 月 20 日至 11 月 29 日
+      - 网传「全馆闭馆三个月」的截图没有发布主体与公告文号，无法追溯来源
+      - 公告没有说明改造若未通过消防验收是否会延长闭馆时间
+      - 不知道改造实际进度能否按期完成
+    knowledge_refs: [F1, F2, F3, F4, F5]
+    speaking_style: 短句，先说范围再说时间，爱用「我核过原文」，不用夸张词
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 居民·田禾
+    persona: 每周带孩子去二层少儿阅览区借绘本，今天特意请假，明天顺路还书。
+    stance: 急切，怕白跑一趟
+    knowledge:
+      - 只在居民群里看到「全馆闭馆三个月」的截图
+      - 不知道改造涉及哪几层，也不知道借还书是否受影响
+    knowledge_refs: []
+    speaking_style: 口语、连问，用「到底」「我假都请了」
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 社区网格员·裴宁
+    persona: 负责把各类通知转到三个居民群，前几天刚因为转错通知被居民投诉过。
+    stance: 谨慎，怕再转错担责任
+    knowledge:
+      - 只收到图书馆公告的标题和转发件，没读正文细则
+      - 不知道具体楼层安排与工期
+    knowledge_refs: []
+    speaking_style: 句尾常带免责说明，爱说「我确认一下再转」
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 群里说图书馆要闭馆三个月，借书卡都要作废了。我明天特意请假去还书，到底还能不能进？
+  - turn: 2
+    speaker: R3
+    content: 我群里只转了个标题，标题写着主馆暂停开放，具体哪几层我真没细看，别到时候又怪我乱转。
+  - turn: 3
+    speaker: R2
+    content: 我表姐在施工队，她说这次不止二层，整馆都要封，得三个月才能重新开。她还让我赶紧把书都还了。
+  - turn: 4
+    speaker: R1
+    content: 我先把公告原文和进场通知调出来逐条对，范围和工期以文件为准，稿子晚点发。
+  - turn: 5
+    speaker: R2
+    content: 那你快点啊，我假都请好了，明天到底去不去？孩子还等着借绘本呢。
+
+target:
+  role_id: R1
+  test_question: 这次施工到底影响哪几层？我这条闭馆提醒该怎么写？
+  intent: 想确认闭馆范围，据此决定今天这条提醒的标题与内容
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 3
+    type: 来源伪造
+    wrong_claim: 施工队的人说这次不止二层，整馆都要封三个月
+    conflicts_with: F2
+    detectable_by: 目标角色核过公告原文与进场通知，改造范围仅限二层东侧，一层与三层照常开放，工期 10 天
+
+scoring_notes:
+  fact_anchor: 应答出改造仅涉及主馆二层少儿阅览区、11 月 20 日起暂停 10 天、一层与三层照常开放、借还书与办证不受影响；须说明「全馆闭馆三个月」是施工队转述、无公告支撑；闭馆是否延期尚未公布
+  role_anchor: 以区融媒体中心编辑身份先给范围与生效时间，说明提醒该怎么写（标题不写全馆闭馆、注明信源与日期），不替图书馆承诺开放或延期
+  key_point: 关键点：「整馆封三个月」出自施工队转述，属未确认信息，写成已确认即按 R9 扣分

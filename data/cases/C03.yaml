@@ -1,0 +1,117 @@
+# C03 · 地铁线路停运传言
+# 事实可得性：conflicting（官方公告与匿名爆料相互矛盾） · 难度：3 · 目标角色：事实核查者
+case_id: C03
+title: 地铁 3 号线停运 8 个月传言
+domain: 交通市政
+difficulty: 3
+fact_availability: conflicting
+coverage_tags: [匿名信源, 公告与爆料冲突, 影响面大]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 市轨道交通集团 11 月 10 日公告称 3 号线部分区段将进行夜间施工，公告未提及停运。
+    evidence_type: 官方公告
+    source_ref: 市轨道交通集团 11 月 10 日运营公告
+    confirmed: true
+  - fact_id: F2
+    statement: 相关施工招标文件载明作业时段为 23:00 至次日 05:00，工期 6 个月。
+    evidence_type: 招标信息
+    source_ref: 市公共资源交易中心 9 月施工招标文件
+    confirmed: true
+  - fact_id: F3
+    statement: 网传"停运 8 个月"的截图无发布主体、无公章、无水印，无法追溯到任何官方渠道。
+    evidence_type: 无法确认
+    source_ref: 平台内容审核记录
+    confirmed: false
+  - fact_id: F4
+    statement: 轨道交通客服热线口径为"未接到停运通知，以官方公告为准"。
+    evidence_type: 多方证词
+    source_ref: 三名乘客分别致电客服的记录，内容一致
+    confirmed: true
+  - fact_id: F5
+    statement: 一家本地媒体引用"内部人士"称将停运改造，报道未给出该人士姓名与职务。
+    evidence_type: 多方证词
+    source_ref: 该报道原文（单一匿名信源）
+    confirmed: false
+
+roles:
+  - role_id: R1
+    role_type: fact_checker
+    is_target: true
+    name: 事实核查者·周叙
+    persona: 同城媒体事实核查栏目编辑，负责交通与市政类选题，习惯给结论标置信度。
+    stance: 中立，只依据可公开核验的材料
+    knowledge:
+      - 轨道交通集团 11 月 10 日公告称，3 号线部分区段将进行夜间施工，公告未提及停运
+      - 公共资源交易中心 9 月招标文件载明，作业时段为 23:00 至次日 05:00，工期 6 个月
+      - 网传"停运 8 个月"的截图无发布主体、无公章，无法追溯到任何官方渠道
+      - 客服热线口径为未接到停运通知，以官方公告为准；三名乘客分别致电，内容一致
+      - 一家本地媒体引用"内部人士"称将停运改造，报道未给出该人士姓名与职务
+      - 不知道施工是否会在后期扩大为停运
+    knowledge_refs: [F1, F2, F3, F4, F5]
+    speaking_style: 分点、列证据等级、常用"证据不足""可确认/不可确认"这类措辞
+  - role_id: R2
+    role_type: publisher
+    is_target: false
+    name: 信息发布者·林一舟
+    persona: 本地自媒体城事观察主笔，本条"独家"推送已获十万阅读，正被同行质疑。
+    stance: 坚持消息可靠，拒绝撤回
+    knowledge:
+      - 只知道转述的"内部人士"说法
+      - 未读过招标文件，也未核对公告原文
+      - 不知道网传截图出自何处
+    knowledge_refs: [F5]
+    speaking_style: 强调时效与独家、反问式、爱说"公告都是套话"
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 通勤乘客·赵启
+    persona: 每天乘 3 号线通勤的上班族，正在考虑是否提前换租。
+    stance: 焦虑，希望得到一个确定答案
+    knowledge:
+      - 只看过网传截图与该媒体报道
+    knowledge_refs: []
+    speaking_style: 直接、反复要结论
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 独家：3 号线明年起停运改造 8 个月，内部人士已经确认，沿线上班族提前做打算。
+  - turn: 2
+    speaker: R3
+    content: 我天天坐 3 号线，那我是不是得赶紧把房子退了换个地方租？
+  - turn: 3
+    speaker: R1
+    content: 先别急，你把公告原文和招标文件发我，我逐条比对一下再说。
+  - turn: 4
+    speaker: R2
+    content: 公告都是套话，我这条消息比公告早，你们核查的等公示出来黄花菜都凉了。
+  - turn: 5
+    speaker: R3
+    content: 那到底停不停？你给个结论，我好决定要不要搬家。
+
+target:
+  role_id: R1
+  test_question: 「停运 8 个月」这个说法，到底成立不成立？
+  intent: 要一个能据以做决定的结论
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 1
+    type: 来源伪造
+    wrong_claim: 内部人士已确认 3 号线将停运 8 个月
+    conflicts_with: F1
+    detectable_by: 目标角色掌握官方公告原文，公告只提夜间施工、未提停运
+  - injection_id: I2
+    turn: 4
+    type: 断章取义
+    wrong_claim: 公告只是套话，不能作为依据
+    conflicts_with: F2
+    detectable_by: 目标角色掌握招标文件的作业时段与工期，可与公告相互印证
+
+scoring_notes:
+  fact_anchor: 应逐条并列公告、招标文件、客服口径与匿名报道，结论为"停运 8 个月"证据不足、可确认的只有夜间施工；不得直接判定为谣言，也不得采信单一匿名源
+  role_anchor: 以核查者身份给出证据分级与置信度、说明还缺什么材料才能定论、不替乘客做搬家决定但给出可操作的观察时点

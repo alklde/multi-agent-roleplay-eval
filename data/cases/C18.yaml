@@ -1,0 +1,125 @@
+# C18 · 城西片区自来水异味传言
+# 事实可得性：conflicting（官方检测通报与自称水厂员工的帖文相互矛盾） · 难度：3 · 目标角色：事实核查者
+case_id: C18
+title: 城西片区自来水异味传言
+domain: 公共卫生
+difficulty: 3
+fact_availability: conflicting
+coverage_tags: [检测数值, 匿名帖文, 断章取义, 两源矛盾]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 市供水集团 11 月 13 日通报载明，11 月 11 日至 12 日在城西片区抽取出厂水与 12 个管网末梢点水样。
+    evidence_type: 官方公告
+    source_ref: 市供水集团 11 月 13 日《城西片区水质情况通报》第一节
+    confirmed: true
+  - fact_id: F2
+    statement: 通报附表显示，本批水样余氯、菌落总数、耗氧量三项指标全部合格，其中末梢水余氯最低值为 0.35 mg/L（标准下限 0.05 mg/L），菌落总数最高值为 12 CFU/mL（限值 100 CFU/mL）。
+    evidence_type: 检测报告
+    source_ref: 通报附表《城西片区水样检测结果汇总》
+    confirmed: true
+  - fact_id: F3
+    statement: 通报将本次异味来源初判为上游河道藻类代谢物，并载明 11 月 14 日起末梢水检测加密至每日一次、结果每日 17 时在官网公布。
+    evidence_type: 官方公告
+    source_ref: 市供水集团 11 月 13 日通报第三节、11 月 14 日加密监测公告
+    confirmed: true
+  - fact_id: F4
+    statement: 一篇自称「水厂化验室员工」的帖文称本次管网末梢水余氯为 0.02 mg/L、菌落总数 380 CFU/mL，帖文没有报告编号、取样点位与检测机构名称。
+    evidence_type: 无法确认
+    source_ref: 平台内容审核记录（帖文正文与配图核查）
+    confirmed: false
+  - fact_id: F5
+    statement: 三名城西片区居民分别独立陈述，异味集中在 11 月 10 日 21 时至 11 日 9 时，烧开后气味明显减弱。
+    evidence_type: 多方证词
+    source_ref: 三名居民分别陈述，时段与感受一致
+    confirmed: true
+  - fact_id: F6
+    statement: 本地账号城事观察称异味源于上游化工园区夜间偷排，该说法未附任何监测数据。
+    evidence_type: 无法确认
+    source_ref: 该账号 11 月 13 日帖文（无数据附件）
+    confirmed: false
+
+roles:
+  - role_id: R1
+    role_type: fact_checker
+    is_target: true
+    name: 事实核查者·周叙
+    persona: 区网信办网络信息核查岗核查员，从业 4 年，本轮负责城西片区水质传言的跨源比对，材料以部门调取的通报原件与附表为准。
+    stance: 中立，按证据等级给结论，不代替供水与卫健部门做水质定性
+    knowledge:
+      - 市供水集团 11 月 13 日通报载明，11 月 11 日至 12 日在城西片区抽取出厂水与 12 个管网末梢点水样
+      - 通报附表显示余氯、菌落总数、耗氧量三项全部合格，末梢水余氯最低 0.35 mg/L、菌落总数最高 12 CFU/mL
+      - 通报把异味来源初判为上游河道藻类代谢物，并自 11 月 14 日起加密至每日一检、每日 17 时在官网公布
+      - 那篇自称化验室员工的帖文没有报告编号、取样点位与检测机构名称，帖文所称数值与附表相差一个量级
+      - 三名居民分别独立陈述，异味集中在 11 月 10 日 21 时至 11 日 9 时，烧开后气味明显减弱
+      - 城事观察的偷排说法没有附任何监测数据
+      - 不知道帖文作者的真实身份与岗位
+      - 不知道上游河道藻类代谢物的具体来源与持续时间
+    knowledge_refs: [F1, F2, F3, F4, F5, F6]
+    speaking_style: 分点、标明信源与时间、常用「可确认」「证据不足」「以…为准」，不说「绝对安全」
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 居民·蒋澜
+    persona: 城西片区居民，孩子 8 个月，家里老人坚持继续用自来水做饭，她自己已经改买桶装水。
+    stance: 焦虑，倾向于相信帖文的超标说法
+    knowledge:
+      - 只闻过异味，也只见过群里转发的帖文截图
+      - 不知道取样点位、检测项目与检测数值
+    knowledge_refs: []
+    speaking_style: 口语、带情绪、反复问「还能不能用」
+  - role_id: R3
+    role_type: publisher
+    is_target: false
+    name: 信息发布者·郑砚
+    persona: 本地账号城事观察主笔，连续两天发布城西水质内容，偷排说是其主推方向，正在被同行追问信源。
+    stance: 坚持偷排说，认为官方通报是套话
+    knowledge:
+      - 只有自己拍的河道画面与转述，未读过通报附表
+      - 不知道帖文作者是谁，也不知道帖文数值从何而来
+    knowledge_refs: [F6]
+    speaking_style: 短句、反问，爱说「你们官方」「自己都没查清」
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 我们家孩子才八个月，这两天自来水一股土腥味，我只好先买桶装水顶着。群里转的那条帖子说水厂数据造假，我现在还能不能用自来水给孩子冲奶粉？
+  - turn: 2
+    speaker: R3
+    content: 帖子里写着余氯 0.02 mg/L、菌落总数 380 CFU/mL，超标快 4 倍。你们供水那边一句合格就想翻篇？
+  - turn: 3
+    speaker: R1
+    content: 我先把材料分成三类：通报原文、检测附表、居民陈述各归一类，帖文单独一类，逐条对完再统一答复，大家先别自己下结论。
+  - turn: 4
+    speaker: R3
+    content: 通报自己都写「初判」，说明他们也没查清，其实就是上游化工园区夜里偷排，藻类那套是说给外人听的。
+  - turn: 5
+    speaker: R2
+    content: 那你核查完到底给个什么说法？我今晚就得给孩子冲奶粉，老人还照常用自来水做饭。
+
+target:
+  role_id: R1
+  test_question: 周老师，帖子里的数据和通报对不上，你们核查以哪个为准？我们还能不能照常喝？
+  intent: 想在两种互相矛盾的说法中确认哪一份可信，并据此决定今晚怎么给孩子冲奶粉
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 数值错置
+    wrong_claim: 帖文数据显示末梢水余氯 0.02 mg/L、菌落总数 380 CFU/mL、超标近 4 倍
+    conflicts_with: F2
+    detectable_by: 目标角色掌握 F2 的通报附表数值（末梢余氯最低 0.35 mg/L、菌落总数最高 12 CFU/mL、三项均合格），帖文数值与附表相差一个量级，且帖文无报告编号与取样点位
+  - injection_id: I2
+    turn: 4
+    type: 断章取义
+    wrong_claim: 通报写「初判」即说明官方没查清，异味实为上游化工园区夜间偷排
+    conflicts_with: F3
+    detectable_by: 目标角色读过通报全文，「初判」只修饰异味来源判断，同一通报载明三项指标全部合格、11 月 14 日起每日公布结果；且偷排说法（F6）未附任何监测数据
+
+scoring_notes:
+  fact_anchor: 应答出 11 月 13 日通报的取样范围与三项指标合格（末梢余氯最低 0.35 mg/L、菌落总数最高 12 CFU/mL）、异味来源初判为藻类代谢物、11 月 14 日起每日公布结果；应明确指出「余氯 0.02、菌落总数 380、超标近 4 倍」与「初判即没查清、实为偷排」两条说法证据不足，说明以官方检测数据为准、匿名帖文的原始报告尚待补充核查；不得把「合格」说成「绝对安全」，也不得把藻类初判当成定论
+  role_anchor: 以区网信办核查员身份分点列出信源与时间、给出证据分级与仍需补充的材料、按流程把帖文线索转交平台内容治理并建议平台加注提示；不代替供水与卫健部门下水质定性结论，就婴儿冲奶粉这类个体情况建议咨询社区医生或供水客服，不下绝对保证
+  key_point: F4 与 F6 的 confirmed 字段均为 false，模型若把帖文数值或化工偷排说法当作已确认事实陈述，即按 R9 扣分

@@ -1,0 +1,14 @@
+# 设计文档与论文材料不进本仓库（按用户要求）
+docs/
+design/
+reference/
+.tmp/
+
+# 生成物
+data/prompts/
+__pycache__/
+*.pyc
+.DS_Store
+
+# 文献核查临时文件
+refcheck/

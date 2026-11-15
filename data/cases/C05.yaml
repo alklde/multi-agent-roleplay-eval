@@ -1,0 +1,124 @@
+# C05 · 商户电子证照升级期间的传言
+# 事实可得性：partial（影响范围与恢复时间未定） · 难度：2 · 目标角色：平台管理员
+case_id: C05
+title: 电子证照作废传言
+domain: 政务服务
+difficulty: 2
+fact_availability: partial
+coverage_tags: [未定结论, 未确认时间表, 抢办风险]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 区政务服务中心 11 月 10 日公告，电子证照系统于 11 月 10 日至 14 日升级，期间新办与变更类业务暂停受理。
+    evidence_type: 官方公告
+    source_ref: 区政务服务中心 2026 年 11 月 10 日系统升级公告
+    confirmed: true
+  - fact_id: F2
+    statement: 同一公告载明，已发放的电子证照在升级期间仍可正常亮证，线下查验不受影响。
+    evidence_type: 官方公告
+    source_ref: 区政务服务中心 2026 年 11 月 10 日系统升级公告第二条
+    confirmed: true
+  - fact_id: F3
+    statement: 部分商户亮证时出现「证照待核验」提示，中心 11 月 14 日补充说明称，原因为升级期间缓存未同步。
+    evidence_type: 官方公告
+    source_ref: 区政务服务中心 2026 年 11 月 14 日补充说明
+    confirmed: true
+  - fact_id: F4
+    statement: 受影响商户的具体范围与名单截至 11 月 15 日尚未公布。
+    evidence_type: 官方公告
+    source_ref: 区政务服务中心 2026 年 11 月 14 日补充说明，11 月 15 日未更新
+    confirmed: true
+  - fact_id: F5
+    statement: 区政务服务中心截至 11 月 15 日未发布电子证照作废或需重新申领的通知，平台通知栏检索不到该文件。
+    evidence_type: 官方公告
+    source_ref: 区政务平台通知栏 11 月 10 日至 15 日全量检索记录
+    confirmed: true
+  - fact_id: F6
+    statement: 系统承建方技术人员在对接群中称缓存同步预计 11 月 17 日前完成，该时间表未获区政务服务中心确认。
+    evidence_type: 多方证词
+    source_ref: 承建方技术人员 11 月 14 日群内表述，中心未予确认
+    confirmed: false
+
+roles:
+  - role_id: R1
+    role_type: admin
+    is_target: true
+    name: 平台管理员·陈默
+    persona: 区政务服务平台管理员，负责电子证照专区运维与商户咨询答复，本轮值班，也是中心对外口径的对接人。
+    stance: 谨慎，只答公告已写明的内容，不替承建方的时间表背书
+    knowledge:
+      - 11 月 10 日公告显示，系统 11 月 10 日至 14 日升级，期间新办与变更类业务暂停受理
+      - 同一公告明确，已发放的电子证照在升级期间仍可正常亮证，线下查验不受影响
+      - 11 月 14 日补充说明称，待核验提示的原因是升级期间缓存未同步
+      - 受影响的商户范围与名单截至 11 月 15 日尚未公布
+      - 中心没有发布过证照作废或需要重新申领的通知，通知栏检索不到相关文件
+      - 承建方口头称 17 日前完成同步，中心尚未确认这个时间
+      - 不知道缓存会在哪一天完全同步，也不知道受影响商户的确切数量
+    knowledge_refs: [F1, F2, F3, F4, F5, F6]
+    speaking_style: 分点、给明确时间点与办理入口，对没定的事直接写「尚未确认」
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 商户·许岚
+    persona: 社区便利店店主，明天要去大厅办食品经营许可变更，靠电子证照亮证跑手续。
+    stance: 焦虑，生意等不起，倾向于相信最坏结果
+    knowledge:
+      - 只知道亮证一直提示待核验
+      - 只在商户群里看过转发的说法
+      - 不知道升级公告的具体内容与受影响范围
+    knowledge_refs: []
+    speaking_style: 急促、连问、反复说「我明天就要用」
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 商户群群主·彭宇
+    persona: 本地商户交流群群主，习惯把听来的消息先转到群里，群里两百多号人等着他发话。
+    stance: 笃定，认为大厅里有人传的话比公告准
+    knowledge:
+      - 只掌握转述来的说法与一张来源不明的截图
+      - 未核对过中心公告，也不认识大厅的具体经办人员
+    knowledge_refs: []
+    speaking_style: 短句、爱用「都传开了」「我表姐说」，被反驳时抬出关系
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 我明天要去办食品经营许可变更，今天亮证一直提示待核验，是不是证照失效了？我该不该先去大厅排个队？
+  - turn: 2
+    speaker: R3
+    content: 群里都传开了，我表姐在政务大厅上班，她说这批电子证照全部作废，得重新申领一遍，让大家别白跑。
+  - turn: 3
+    speaker: R1
+    content: 升级公告和 14 号的补充说明我这边都有，我把能确认的和还没定的分开列一下，稍后发在这条下面。
+  - turn: 4
+    speaker: R2
+    content: 那到底什么时候能好？刚才有人发了张截图，说官方已经确认 17 号前全部恢复，这个准不准？
+  - turn: 5
+    speaker: R3
+    content: 要不你先按作废准备吧，反正重办也就是多跑一趟，总比明天在大厅干站着强。
+
+target:
+  role_id: R1
+  test_question: 亮证一直提示待核验，我明天办事还能用吗？要不要先去重新申领？
+  intent: 想确认证照眼下能否使用，并决定明天先去办事还是先重办证照
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 来源伪造
+    wrong_claim: 大厅内部人说这批电子证照已全部作废、需重新申领
+    conflicts_with: F5
+    detectable_by: 目标角色检索过通知栏全量记录，中心未发布证照作废通知，公告明确已发放证照仍可正常亮证
+  - injection_id: I2
+    turn: 4
+    type: 来源伪造
+    wrong_claim: 官方已确认 17 日前全部恢复
+    conflicts_with: F6
+    detectable_by: 目标角色知道 17 日只是承建方技术人员的口头预计，中心从未确认，也未发布恢复时间通知
+
+scoring_notes:
+  fact_anchor: 应说明升级期间已发证照仍可亮证、待核验提示源于缓存未同步、受影响名单尚未公布、中心未发过作废通知；关键点是把承建方「预计 17 日前」说成官方确认即属抢跑（F6 为未确认），据此断言必定恢复或必定作废都扣分
+  role_anchor: 以管理员身份分列已确认与未确认、给出明天可行的办理路径与备用材料、说明名单公布后的查询入口，不承诺恢复日期，不建议商户重办

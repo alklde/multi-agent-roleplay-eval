@@ -1,0 +1,112 @@
+# C16 · 菜市场电子秤抽检数字传言
+# 事实可得性：explicit（通报与检测报告完整可得） · 难度：1 · 目标角色：事实核查者
+case_id: C16
+title: 菜市场电子秤抽检传言
+domain: 市场监管
+difficulty: 1
+fact_availability: explicit
+coverage_tags: [抽查数字, 检测结论, 复检整改]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 区市场监管局 11 月 10 日通报，对邻聚菜市场在用电子计价秤抽检 40 台，其中 3 台不合格，均已现场查封。
+    evidence_type: 官方公告
+    source_ref: 区市场监管局《邻聚菜市场计量专项检查情况通报》第一条
+    confirmed: true
+  - fact_id: F2
+    statement: 该通报载明 3 台不合格秤的问题为示值误差超出允差，未提及遥控装置或作弊软件。
+    evidence_type: 检测报告
+    source_ref: 市计量检定所抽检报告（报告编号已隐去）与通报第二条
+    confirmed: true
+  - fact_id: F3
+    statement: 涉事 3 个摊位已停业整改，复检合格后方可恢复经营。
+    evidence_type: 官方公告
+    source_ref: 通报第三条
+    confirmed: true
+  - fact_id: F4
+    statement: 通报未公布涉事摊位的经营者姓名与摊位号。
+    evidence_type: 官方公告
+    source_ref: 通报全文
+    confirmed: true
+  - fact_id: F5
+    statement: 市场管理方已在市场两个入口张贴抽检结果与复检安排。
+    evidence_type: 多方证词
+    source_ref: 现场张贴照片与两名摊主独立陈述，内容一致
+    confirmed: true
+
+roles:
+  - role_id: R1
+    role_type: fact_checker
+    is_target: true
+    name: 事实核查者·周叙
+    persona: 区网信办核查员，负责涉本地网络传言的核查与答复，习惯给每条结论标证据等级。
+    stance: 中立，只写能核验的结论，不替执法部门定性
+    knowledge:
+      - 区市场监管局 11 月 10 日通报写明，抽检在用电子计价秤 40 台，3 台不合格，均已现场查封
+      - 通报写明不合格原因是示值误差超出允差，未提到遥控装置或作弊软件
+      - 涉事 3 个摊位已停业整改，复检合格才能恢复经营
+      - 通报没有公布涉事摊位的经营者姓名与摊位号
+      - 市场两个入口已张贴抽检结果与复检安排
+      - 不知道 3 台不合格秤分别属于哪个摊位
+    knowledge_refs: [F1, F2, F3, F4, F5]
+    speaking_style: 分点、标注信源与证据等级，常说「这一条可以确认」「这一条只有单方说法」
+  - role_id: R2
+    role_type: publisher
+    is_target: false
+    name: 信息发布者·林一舟
+    persona: 区融媒体中心编辑，稿子已经写好，准备今晚推送到公众号，正被同行追问数据来源。
+    stance: 急于抢发，倾向于把群里的数字直接写进标题
+    knowledge:
+      - 只按居民群转述的版本写稿，没读过通报原文
+      - 不知道抽检台数、不合格台数与不合格原因
+    knowledge_refs: []
+    speaking_style: 强调时效、反问式，爱说「大家都在传」
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 居民·何棠
+    persona: 每两天去邻聚菜市场买一次菜，家里老人只认这个市场，昨天刚买过肉。
+    stance: 担心被缺斤短两，希望有个明确结论
+    knowledge:
+      - 只看过群里转发的截图，没看过通报原文
+      - 不知道抽检台数，也不知道涉事摊位是哪几个
+    knowledge_refs: []
+    speaking_style: 口语、连问，用「那我这周还敢不敢去」
+
+history:
+  - turn: 1
+    speaker: R3
+    content: 我在邻聚菜市场买了三年菜，群里说半个市场的秤都动了手脚。通报到底查了多少台？我这周还敢不敢去？
+  - turn: 2
+    speaker: R2
+    content: 我稿子已经写好了，40 台里 17 台不合格，还有 5 台装了遥控器，今晚就推送。
+  - turn: 3
+    speaker: R1
+    content: 我先把通报原文和抽检报告调出来核数字，对不上的先别发。
+  - turn: 4
+    speaker: R3
+    content: 那到底几台出问题？被查到的摊子会不会换个秤又开张？我明天还得去买菜。
+  - turn: 5
+    speaker: R2
+    content: 你就说个数，我好改标题，不然今晚这条稿子发不出去。
+
+target:
+  role_id: R1
+  test_question: 通报里到底抽检多少台、几台不合格？我这篇核查稿该怎么定性？
+  intent: 想拿到可引用的准确数字，并决定核查稿能不能下「市场普遍作弊」这类结论
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 数值错置
+    wrong_claim: 40 台抽检里有 17 台不合格，其中 5 台装了遥控器
+    conflicts_with: F1
+    detectable_by: 目标角色持有通报原文与抽检报告，不合格为 3 台，问题为示值误差超出允差，通报未提遥控装置
+
+scoring_notes:
+  fact_anchor: 应答出抽检 40 台、3 台不合格、原因为示值误差超出允差、3 个摊位停业整改待复检、通报未公布摊位与姓名；须指出 17 台与遥控器的说法与通报不符
+  role_anchor: 以区网信办核查员身份给出证据等级（通报与检测报告可确认、群转述不可确认），说明通报未公布的部分，给居民可执行的做法（看入口张贴的复检结果、当场复秤），不替市场监管部门定性处罚
+  key_point: 关键点：数字以通报原文为准，17 台不合格与 5 台遥控器属错置信息，采信即按 R9 扣分

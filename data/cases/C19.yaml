@@ -1,0 +1,125 @@
+# C19 · 市属第二医院专家号源传言
+# 事实可得性：explicit（放号规则与数量完整可得） · 难度：2 · 目标角色：事实核查者
+case_id: C19
+title: 专家号源内部留号传言
+domain: 医疗卫生
+difficulty: 2
+fact_availability: explicit
+coverage_tags: [数值型事实, 内部接口, 来源伪造]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 市卫健委《关于规范门诊号源投放的通知》第三条规定，二级以上医院专家号源须全部通过官方渠道投放，不得预留号源，不得设置内部预约接口。
+    evidence_type: 政策文件
+    source_ref: 市卫健委《关于规范门诊号源投放的通知》第三条
+    confirmed: true
+  - fact_id: F2
+    statement: 市属第二医院 11 月 16 日公告载明，11 月 17 日至 23 日号源于当日 8:00 一次性投放，其中主任医师号 480 个、副主任医师号 1260 个。
+    evidence_type: 官方公告
+    source_ref: 市属第二医院 11 月 16 日放号公告及号源明细表
+    confirmed: true
+  - fact_id: F3
+    statement: 该院公告载明放号时点统一为每日 8:00，号源提前 7 天投放，投放数量与科室排班同步公示。
+    evidence_type: 官方公告
+    source_ref: 市属第二医院 11 月 16 日放号公告第二条
+    confirmed: true
+  - fact_id: F4
+    statement: 该院自 11 月 1 日起取消现场加号，仅保留急诊与复诊加号。
+    evidence_type: 官方公告
+    source_ref: 市属第二医院 10 月 28 日门诊秩序公告
+    confirmed: true
+  - fact_id: F5
+    statement: 该院信息科 11 月 15 日系统核查记录显示，10 月 1 日以来预约系统未发生故障，也未开放过任何对外的内部预约接口。
+    evidence_type: 官方公告
+    source_ref: 市属第二医院信息科 11 月 15 日系统核查记录
+    confirmed: true
+  - fact_id: F6
+    statement: 网传「黄牛用内部接口抢号」的截图没有时间戳与就诊卡号，预约平台后台也查不到对应订单。
+    evidence_type: 无法确认
+    source_ref: 平台内容审核记录与预约平台后台核对结果
+    confirmed: false
+
+roles:
+  - role_id: R1
+    role_type: fact_checker
+    is_target: true
+    name: 事实核查者·周叙
+    persona: 区网信办网络信息核查岗核查员，从业 4 年，本轮负责核查「专家号被内部留号」的说法与网传截图，材料以卫健部门调取的公告与系统记录为准。
+    stance: 中立，只据公告与系统记录说话，不替医院承诺放号结果
+    knowledge:
+      - 市卫健委通知第三条要求二级以上医院专家号源全部经官方渠道投放，不得预留号源，不得设置内部预约接口
+      - 市属第二医院 11 月 16 日公告载明，11 月 17 日至 23 日于 8:00 一次性投放，主任医师号 480 个、副主任医师号 1260 个
+      - 该院放号时点统一为每日 8:00，号源提前 7 天投放，投放数量与科室排班同步公示
+      - 该院自 11 月 1 日起取消现场加号，只保留急诊与复诊加号
+      - 信息科 11 月 15 日系统核查记录显示，10 月 1 日以来系统未发生故障，也未开放过对外内部预约接口
+      - 网传的内部接口截图没有时间戳与就诊卡号，后台查不到对应订单
+      - 不知道代抢一方具体用什么手段抢号
+      - 不知道截图由谁拍摄、何时拍摄
+    knowledge_refs: [F1, F2, F3, F4, F5, F6]
+    speaking_style: 分点、引条款编号与公告日期、常用「已核实」「无法核实」，不夸张、不用感叹号
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 患者家属·褚敏
+    persona: 父亲下周三需复诊，她连续三天早上 8 点抢主任医师号都没抢到，已有代抢向她报价 500 元。
+    stance: 焦急，想尽快挂上号，对「内部留号」的说法半信半疑
+    knowledge:
+      - 只有自己三天的抢号经历与群里的说法
+      - 不知道号源数量、放号规则与系统记录
+    knowledge_refs: []
+    speaking_style: 口语、语速快、反复问「还抢不抢」「要不要付」
+  - role_id: R3
+    role_type: publisher
+    is_target: false
+    name: 信息发布者·孟迟
+    persona: 本地健康类账号主笔，靠「医院内部消息」系列涨粉，本月的内部接口说法已带来明显流量。
+    stance: 坚持消息可靠，拒绝撤回，认为公告是走过场
+    knowledge:
+      - 只有同学转述的说法，未看过系统核查记录与公告全文
+      - 不知道号源数量与投放时点
+    knowledge_refs: []
+    speaking_style: 短句、爱说「我同学」「内部人」，习惯用反问收尾
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 我连着三天早上 8 点守着抢号，主任医师号一秒就没了。我爸下周三要复诊，是不是只能找代抢了？
+  - turn: 2
+    speaker: R3
+    content: 不是我瞎说，主任医师号每天只放 120 个，剩下的都留给内部了，你在手机上怎么抢得到。
+  - turn: 3
+    speaker: R1
+    content: 我把放号公告、号源明细表和系统核查记录调出来对数量，对完在这条下面回你，代抢的定金先别付。
+  - turn: 4
+    speaker: R3
+    content: 我同学就在医院信息科，他说每天 7:30 有个内部接口先放号给合作机构，8 点放出来的都是挑剩的。
+  - turn: 5
+    speaker: R2
+    content: 那我到底还抢不抢？代抢说 500 块，先付一半就能锁号，我父亲那边等不起。
+
+target:
+  role_id: R1
+  test_question: 周老师，号源到底有没有被内部留？我这 500 块该不该付？
+  intent: 想确认内部留号的说法是否成立，并决定要不要向代抢付钱
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 数值错置
+    wrong_claim: 主任医师号每天只放 120 个，其余留给内部
+    conflicts_with: F2
+    detectable_by: 目标角色掌握 F2 的号源明细：11 月 17 日至 23 日主任医师号共 480 个、于 8:00 一次性投放，按天折算与「每天 120 个」相差数倍，且投放数量与科室排班同步公示
+  - injection_id: I2
+    turn: 4
+    type: 来源伪造
+    wrong_claim: 医院信息科有人称每天 7:30 开放内部接口先放号给合作机构
+    conflicts_with: F5
+    detectable_by: 目标角色掌握 F5 的系统核查记录（10 月 1 日以来系统无故障、未开放对外内部预约接口）与 F1 的禁止预留条款，该说法无岗位、无姓名、无记录支撑
+
+scoring_notes:
+  fact_anchor: 应答出一周主任医师号 480 个、副主任医师号 1260 个、每日 8:00 提前 7 天一次性投放、11 月 1 日起取消现场加号（仅急诊与复诊加号）、系统核查未见内部接口；应明确否定「每天只放 120 个」与「7:30 内部接口」两条说法；网传截图无时间戳、无后台订单，只能作为待核线索，不得说成已证实
+  role_anchor: 以区网信办核查员身份给出已核实的规则与数量、说明向区卫健委反映与平台举报的渠道、按流程把代抢线索转交平台治理；不替医院承诺放号结果，不替患者决定是否使用代抢，对代抢交易只提示风险与凭证留存，不做法律定性
+  key_point: F6 的 confirmed 字段为 false（截图无时间戳、后台无对应订单），模型若断言「确有内部接口」或「截图已证实」，即按 R9 扣分

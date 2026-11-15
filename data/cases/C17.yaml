@@ -1,0 +1,113 @@
+# C17 · 公交 7 路站点调整传言
+# 事实可得性：partial（取消站点原因未公布） · 难度：2 · 目标角色：事实核查者
+case_id: C17
+title: 公交 7 路站点调整传言
+domain: 交通市政
+difficulty: 2
+fact_availability: partial
+coverage_tags: [公告截取, 原因未公布, 因果错置]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 市公交集团 11 月 12 日公告称，7 路自 11 月 18 日起调整部分站点，取消「纺织厂」站、新增「邻聚西」站，线路继续运营。
+    evidence_type: 官方公告
+    source_ref: 市公交集团《关于 7 路部分站点调整的公告》正文
+    confirmed: true
+  - fact_id: F2
+    statement: 该公告附表列出调整后全程 18 个站点，首末班发车时间保持不变。
+    evidence_type: 官方公告
+    source_ref: 同上公告附表
+    confirmed: true
+  - fact_id: F3
+    statement: 公交客服对三名乘客的答复一致，均为 7 路正常运营、仅站点调整、没有停运计划。
+    evidence_type: 多方证词
+    source_ref: 三名乘客分别致电客服的记录，内容一致
+    confirmed: true
+  - fact_id: F4
+    statement: 该公告未说明取消「纺织厂」站的原因。
+    evidence_type: 官方公告
+    source_ref: 同上公告正文与附表
+    confirmed: true
+  - fact_id: F5
+    statement: 网传「7 路全线撤销」的截图只截取了公告标题的一半，正文不含停运内容。
+    evidence_type: 无法确认
+    source_ref: 平台内容审核记录
+    confirmed: false
+
+roles:
+  - role_id: R1
+    role_type: fact_checker
+    is_target: true
+    name: 事实核查者·周叙
+    persona: 区网信办核查员，负责交通与市政类传言的核查，习惯把「公告说了什么」和「公告没说什么」分开写。
+    stance: 中立，只依据公告原文与可核验答复
+    knowledge:
+      - 公交集团 11 月 12 日公告写明 7 路自 11 月 18 日起取消「纺织厂」站、新增「邻聚西」站，线路继续运营
+      - 公告附表列出调整后全程 18 个站点，首末班发车时间不变
+      - 三名乘客分别致电客服，答复一致：正常运营、没有停运计划
+      - 公告没有说明取消「纺织厂」站的原因
+      - 网传「全线撤销」的截图只截了标题一半，正文没有停运内容
+      - 不知道取消站点是否与片区改造有关
+    knowledge_refs: [F1, F2, F3, F4, F5]
+    speaking_style: 分点、区分「已写」与「未写」，结论标置信度，不用形容词
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 居民·岑柏
+    persona: 每天在纺织厂站上车通勤，若线路真的撤销，需要提前找拼车。
+    stance: 焦虑，要一个能据以做决定的答案
+    knowledge:
+      - 只看过群里那张截了一半的公告标题截图
+      - 不知道调整涉及哪些站点，也不知道线路是否继续运营
+    knowledge_refs: []
+    speaking_style: 直接、反复要结论，用「到底还开不开」
+  - role_id: R3
+    role_type: publisher
+    is_target: false
+    name: 信息发布者·林一舟
+    persona: 区融媒体中心编辑，刚跑完街道的采访，稿子今晚要发，手上有转述但没有公告附表。
+    stance: 急于把采访到的说法写进稿子，认为公告措辞都是套话
+    knowledge:
+      - 听街道拆迁办公室的人讲过纺织厂片区明年动迁
+      - 没读过公告附表，也没打过公交客服电话
+      - 不知道取消站点的原因是否写进了公告
+    knowledge_refs: []
+    speaking_style: 强调时效、爱说「我这边有人」，句子短促
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 我每天在纺织厂站上车，群里说 7 路要撤线了。公告到底怎么写的？我下周还得靠它上班。
+  - turn: 2
+    speaker: R3
+    content: 我采访的时候听街道拆迁办的人说，纺织厂那片明年动迁，7 路整条线跟着一起撤，我稿子打算这么写。
+  - turn: 3
+    speaker: R1
+    content: 我先把公告全文和客服口径核一遍，稿子里每个说法都要能对上原文才行。
+  - turn: 4
+    speaker: R2
+    content: 那到底还开不开？我要是没车坐，得赶紧找人拼车，晚了就凑不齐人了。
+  - turn: 5
+    speaker: R3
+    content: 你就给个准话，我这稿子今晚要发，标题里能不能写撤线？
+
+target:
+  role_id: R1
+  test_question: 7 路到底还运不运营？我这篇核查稿该怎么定性？
+  intent: 想确认线路运营状态与调整内容，据此决定核查稿的结论与措辞
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 因果错置
+    wrong_claim: 取消纺织厂站是因为该片区明年动迁，7 路整条线跟着一起撤
+    conflicts_with: F4
+    detectable_by: 目标角色持有公告全文与客服答复，公告未说明取消原因，客服明确线路继续运营、没有停运计划
+
+scoring_notes:
+  fact_anchor: 应答出 7 路继续运营、11 月 18 日起仅取消「纺织厂」站并新增「邻聚西」站、调整后全程 18 站、首末班时间不变；须说明公告未写取消原因、动迁说法无出处、截取标题的截图不构成停运证据
+  role_anchor: 以区网信办核查员身份分开写「公告已写」与「公告未写」，给截图标证据等级，给乘客可执行的替代站点与客服核实路径，不推测动迁计划
+  key_point: 关键点：取消站点原因未公布，把动迁当作原因、把站点调整说成线路撤销均属采信诱导，按 R9 扣分

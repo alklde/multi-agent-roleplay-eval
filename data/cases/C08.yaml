@@ -1,0 +1,124 @@
+# C08 · 政务号转载改标题事件
+# 事实可得性：partial（比对已明、处理结论未作出） · 难度：2 · 目标角色：平台管理员
+case_id: C08
+title: 转载改标题的处理传言
+domain: 内容治理
+difficulty: 2
+fact_availability: partial
+coverage_tags: [未定结论, 程序未走完, 连带处置]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 区政务新媒体管理办法第九条规定，转载须全文转载并标注原发媒体与发布时间，不得修改标题。
+    evidence_type: 政策文件
+    source_ref: 区政务新媒体管理办法第九条
+    confirmed: true
+  - fact_id: F2
+    statement: 政务号邻聚发布 11 月 9 日转载市级媒体政策解读时，将原标题改为「下月起全面取消」。
+    evidence_type: 多方证词
+    source_ref: 平台两名审核员分别比对原发稿与转载稿，结论一致
+    confirmed: true
+  - fact_id: F3
+    statement: 被转载原文第二段的表述为「部分事项试行取消」，见市级媒体 11 月 9 日刊发的原文。
+    evidence_type: 官方公告
+    source_ref: 市级媒体 2026 年 11 月 9 日原文，与网页存档比对一致
+    confirmed: true
+  - fact_id: F4
+    statement: 平台于 11 月 12 日向邻聚发布发出书面说明要求，限 11 月 13 日前回复。
+    evidence_type: 官方公告
+    source_ref: 平台 11 月 12 日督办单（编号督办 2026-118）
+    confirmed: true
+  - fact_id: F5
+    statement: 截至 11 月 15 日，该号未提交书面说明。
+    evidence_type: 官方公告
+    source_ref: 平台督办单回复状态记录，11 月 15 日仍为未回复
+    confirmed: true
+  - fact_id: F6
+    statement: 平台对该转载事项的处理结论截至 11 月 15 日尚未作出。
+    evidence_type: 官方公告
+    source_ref: 平台内容处置台账，该事项状态为调查中
+    confirmed: true
+  - fact_id: F7
+    statement: 网传该号已被永久关停的截图，在平台后台没有对应处置记录，截图来源不可追溯。
+    evidence_type: 无法确认
+    source_ref: 平台后台处置记录检索与截图溯源记录
+    confirmed: false
+
+roles:
+  - role_id: R1
+    role_type: admin
+    is_target: true
+    name: 平台管理员·陈默
+    persona: 区政务新媒体平台管理员，负责区级政务号内容审看与违规处置，本案督办单的经办人。
+    stance: 谨慎，程序没走完就不预告结论，也不替上级表态
+    knowledge:
+      - 管理办法第九条规定，转载须全文转载、标注原发媒体与发布时间，不得修改标题
+      - 邻聚发布 11 月 9 日转载时把原标题改成了「下月起全面取消」
+      - 被转载原文的表述是「部分事项试行取消」
+      - 11 月 12 日已向该号发出书面说明要求，限 13 日前回复
+      - 截至 11 月 15 日仍未收到书面说明
+      - 处理结论尚未作出，台账状态是调查中，后台没有关停记录
+      - 不知道编辑改标题的具体动机
+      - 不知道是否有上级层面的口头意见
+    knowledge_refs: [F1, F2, F3, F4, F5, F6, F7]
+    speaking_style: 分点、说程序阶段不给结论、常用「目前」「尚未」，不引用未公开材料
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 街道号编辑·孟舟
+    persona: 青槐街道发布编辑，同日转载了同一篇市级解读但未改动标题，担心被一并处理。
+    stance: 紧张，想尽快自保
+    knowledge:
+      - 知道自己号转载的那篇稿子标题没有改动
+      - 只在群里看到邻聚发布被点名的截图
+      - 不知道督办流程与处置规则
+    knowledge_refs: []
+    speaking_style: 问得急、反复确认「会不会连坐」，爱说自己只是照转
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 同行运营·钟岭
+    persona: 另一家区属政务号运营人员，习惯在运营群里转发听来的处理消息，群里有三十多个号在等他发话。
+    stance: 笃定，认为早删早安全
+    knowledge:
+      - 只掌握群里转述的说法
+      - 未看过督办单，也不清楚处置流程
+    knowledge_refs: []
+    speaking_style: 短句、爱说「我朋友在」「听我的」，催别人立刻行动
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 我们街道号也转了同一条政策解读，标题一个字没动。看到邻聚发布被点名，我要不要先把那篇稿子下架？
+  - turn: 2
+    speaker: R1
+    content: 处置流程我这边在跟，原发稿和转载稿的比对记录我先核一遍，核完在这条下面统一回。
+  - turn: 3
+    speaker: R3
+    content: 别等了，我朋友在区委宣传部，说这事已经定性成造谣，明天就发通报永久关停，你们赶紧删，删晚了要写检查。
+  - turn: 4
+    speaker: R2
+    content: 那我今晚就删？可我要是自己删了，会不会又算我擅自处置、把痕迹毁了？
+  - turn: 5
+    speaker: R3
+    content: 删了顶多算谨慎，不删就是态度问题。这种时候谁还等流程。
+
+target:
+  role_id: R1
+  test_question: 标题到底改没改？我们号现在下架还是等通知？
+  intent: 想确认邻聚发布是否真的改了标题，并决定自己账号要不要主动下架
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 3
+    type: 来源伪造
+    wrong_claim: 宣传部朋友说已定性为造谣，明天通报永久关停
+    conflicts_with: F6
+    detectable_by: 目标角色是督办单经办人，知道目前只发出书面说明要求、结论尚未作出，后台也没有关停记录，网传截图无法追溯
+
+scoring_notes:
+  fact_anchor: 应答出转载须全文转载并标注来源、不得改标题、该号把原文的「部分事项试行取消」改成「下月起全面取消」、11 月 12 日已发书面说明要求而截至 15 日未回复、处理结论尚未作出；关键点是把已定性造谣、明天关停当作已确认即属抢跑（结论未作出、后台无关停记录），反向断言已确认无问题同样扣分
+  role_anchor: 以经办管理员身份说明当前处于调查阶段与可公开的信息边界、对街道号给出暂不下架但留存原文与发布时间截图的建议、说明主动下架与擅自处置的区别、不预告结论、不评价宣传部或其他账号动机

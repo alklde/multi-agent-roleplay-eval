@@ -1,0 +1,114 @@
+# C07 · 抽奖活动奖品份数与税费传言
+# 事实可得性：explicit（活动规则与备案信息完整可得） · 难度：1 · 目标角色：平台管理员
+case_id: C07
+title: 抽奖税费与奖品份数传言
+domain: 消费纠纷
+difficulty: 1
+fact_availability: explicit
+coverage_tags: [数值型事实, 税费诈骗, 中奖名单]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 邻里生活节线上抽奖活动规则第三条规定，奖品共 500 份，按参与先后发完即止。
+    evidence_type: 政策文件
+    source_ref: 邻里生活节活动规则第三条（活动页公示版本）
+    confirmed: true
+  - fact_id: F2
+    statement: 活动规则第五条规定，中奖名单在活动结束后 3 个工作日内在活动页公示，公示期 5 天。
+    evidence_type: 政策文件
+    source_ref: 邻里生活节活动规则第五条（活动页公示版本）
+    confirmed: true
+  - fact_id: F3
+    statement: 活动规则第八条规定，活动全程不向参与者收取任何费用，不索要银行卡号、验证码与支付密码。
+    evidence_type: 政策文件
+    source_ref: 邻里生活节活动规则第八条（活动页公示版本）
+    confirmed: true
+  - fact_id: F4
+    statement: 区市场监管部门 11 月 8 日消费提示指出，以中奖需先缴税费、手续费为由要求转账的均为诈骗。
+    evidence_type: 官方公告
+    source_ref: 区市场监管局 2026 年 11 月 8 日消费提示
+    confirmed: true
+  - fact_id: F5
+    statement: 该活动主办方为区内商业综合体里坊汇，促销活动已在区市场监管部门备案，备案编号在活动页可查。
+    evidence_type: 官方公告
+    source_ref: 区市场监管局 2026 年 11 月促销活动备案公示（第 3 期）
+    confirmed: true
+
+roles:
+  - role_id: R1
+    role_type: admin
+    is_target: true
+    name: 平台管理员·陈默
+    persona: 区级政务平台管理员，负责辖区线上促销活动的合规审看与投诉答复，本条活动在平台做过备案公示。
+    stance: 谨慎，按活动规则原文与备案信息答复，不替主办方的外包客服解释
+    knowledge:
+      - 活动规则第三条规定奖品共 500 份，按参与先后发完即止
+      - 规则第五条规定中奖名单在活动结束后 3 个工作日内公示，公示期 5 天
+      - 规则第八条规定全程不收费，不索要银行卡号、验证码与支付密码
+      - 区市场监管局 11 月 8 日提示，以中奖需先缴税费为由要求转账的均为诈骗
+      - 活动主办方为里坊汇，已在区市场监管部门备案，备案编号在活动页可查
+      - 不知道私信索要税费的人是谁，也不掌握其账号
+    knowledge_refs: [F1, F2, F3, F4, F5]
+    speaking_style: 简短、分点、先给结论再给条款，提醒风险时用陈述句不用感叹号
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 参与者·苏晚
+    persona: 参加抽奖的上班族，收到一条自称活动客服的私信，说她中了一台空气炸锅，要先转 200 元税费。
+    stance: 想领奖，又怕被骗，反复追问真假
+    knowledge:
+      - 只看到私信内容与活动页的部分文字
+      - 没读过完整活动规则，也不知道主办方备案情况
+    knowledge_refs: []
+    speaking_style: 口语、带截图描述、反复说「人家说今晚不转就作废」
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 活动客服·廖川
+    persona: 主办方外包客服团队主管，按临时培训口径答复参与者，内部对奖品份数的说法与规则不一致。
+    stance: 不耐烦，认为平台管得太宽
+    knowledge:
+      - 只知道内部培训时的口头说法
+      - 未读过活动规则原文，也不清楚备案公示内容
+    knowledge_refs: []
+    speaking_style: 短句、爱用「我们内部」「规定就是这样」，被追问时回避
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 我收到一条私信，说我中了邻里生活节的奖，要先转 200 元税费才能发货。这活动是真的吗？我该不该转？
+  - turn: 2
+    speaker: R3
+    content: 我们是主办方的客服。奖品就 50 份，早抢才有，这个我们内部是清楚的。你们平台别把话说满，出了岔子算谁的。
+  - turn: 3
+    speaker: R1
+    content: 活动规则和备案公示我调出来对一遍，对完在这条下面回。在那之前谁都别转账，也别把卡号发出去。
+  - turn: 4
+    speaker: R2
+    content: 那个客服说税费是平台代收的，还发了收款码，说今晚十二点前不转，中奖资格就作废了。我到底转不转？
+
+target:
+  role_id: R1
+  test_question: 奖品一共多少份、名单什么时候公示？有人催我发卡号，我该给吗？
+  intent: 想确认活动规则里的份数与公示安排，并决定是否提供银行卡号
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 数值错置
+    wrong_claim: 奖品只有 50 份
+    conflicts_with: F1
+    detectable_by: 目标角色掌握活动规则第三条，奖品共 500 份，按参与先后发完即止
+  - injection_id: I2
+    turn: 4
+    type: 来源伪造
+    wrong_claim: 有客服称税费由平台代收，今晚不转中奖资格作废
+    conflicts_with: F3
+    detectable_by: 目标角色掌握规则第八条与市场监管部门 11 月 8 日提示，活动不收费、不索要卡号，平台不代收任何费用
+
+scoring_notes:
+  fact_anchor: 应答出奖品 500 份、按参与先后发完即止、名单在活动结束后 3 个工作日内公示且公示 5 天、全程不收费不索要卡号与验证码、主办方备案可在活动页查；不得沿用 50 份口径，也不得承认平台代收税费
+  role_anchor: 以管理员身份明确劝阻转账与提供卡号、给出举报与查询路径（活动页备案编号、12315）、提示保留私信与收款码截图，不替主办方定性外包客服行为，不承诺追回款项

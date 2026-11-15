@@ -1,0 +1,235 @@
+{
+  "prereg_id": "PR-2026-11-16-A",
+  "version": "1.1",
+  "created_at": "2026-11-16",
+  "status": "draft-awaiting-model-selection",
+  "supersedes": "prereg/prereg_v1.json",
+  "scope": {
+    "question": "在相同信息含量下，结构化角色设定与带轮次编号的历史（struct）相对扁平淡化叙述（flat），是否能提升模型对目标角色下一条回复的事实符合度与角色符合度",
+    "unit_of_analysis": "case",
+    "unit_of_observation": "run",
+    "planned_runs": 120,
+    "design": {
+      "cases": 20,
+      "variants": [
+        "flat",
+        "struct"
+      ],
+      "repeats": 3,
+      "raters": 2,
+      "prompt_version": "p2",
+      "few_shot_examples": 1
+    },
+    "excluded": [
+      "多轮连续生成（每次运行只生成目标角色的一条回复）",
+      "自动提示词搜索",
+      "LLM 自动判分",
+      "并发集群与多用户"
+    ]
+  },
+  "materials": {
+    "case_dir": "data/cases",
+    "case_count": 20,
+    "prompt_renderer": "tools/render_prompt.py",
+    "prompt_variant_spec": "docs/06-提示设计.md",
+    "rating_scale": "docs/07-评分量表.md",
+    "case_validator": "tools/validate_cases.py",
+    "equivalence_auditor": "tools/audit_equivalence.py",
+    "few_shot_note": "两变体共用同一段门导诊示例的命题内容，各自以其格式呈现；示例场景与 20 个正式案例无关"
+  },
+  "sampling": {
+    "model_id": null,
+    "model_revision": null,
+    "temperature": null,
+    "top_p": null,
+    "max_output_tokens": 512,
+    "stop": null,
+    "seed": 20261017,
+    "seed_note": "seed 仅作为可复现性声明；若服务端不支持确定性采样，须在报告中写明",
+    "note": "采样参数在选定模型后填入并重新计算哈希（记为 amendment M2），不得在看到任何回复后调整"
+  },
+  "execution": {
+    "timeout_seconds": 60,
+    "max_retries": 2,
+    "backoff_seconds": [
+      1,
+      4
+    ],
+    "retry_on": [
+      "network_error",
+      "rate_limit",
+      "server_5xx",
+      "timeout"
+    ],
+    "no_retry_on": [
+      "auth_error",
+      "invalid_request",
+      "content_filter_hard_block"
+    ],
+    "idempotency_key": [
+      "experiment_id",
+      "case_id",
+      "config_id",
+      "repeat_idx"
+    ],
+    "order": "case_major",
+    "order_note": "同一案例的 flat 与 struct 相邻执行，repeat 0/1/2 相邻，以最小化时间漂移"
+  },
+  "rating": {
+    "raters": 2,
+    "scope": "全部 120 条运行由两名评分者各自独立、盲化评分（不做抽样双评）",
+    "blind": "评分界面不显示 variant、模型名、批次；队列顺序随机",
+    "adjudication": {
+      "trigger": "同一运行同一维度两人分差 |Δs| ≥ 2",
+      "procedure": "两名评分者对照 fact_anchor / role 锚点讨论后，由评分者 A 写入裁定分，并以 supersedes 记录原两行",
+      "no_third_rater": "不引入第三评分者（成本与人力约束），裁定分歧计入报告"
+    },
+    "rater_aggregation": {
+      "dimension": "s_k = 两名评分者该维度可用分的算术平均（一人为 null 时取另一人）",
+      "composite": "先对每名评分者按 s 计算 t（各自处理 null），再对 t 取可用评分者的均值",
+      "both_raters_missing": "该运行该维度为 null"
+    },
+    "inter_rater": {
+      "metrics": [
+        "quadratic_weighted_kappa (per dimension, ordinal 1-5)",
+        "ICC(2,1) (per dimension, absolute agreement)"
+      ],
+      "sample": "全部同时被两人评过的运行",
+      "role": "描述性报告，不作为纳入/排除依据；κ < 0.40 时须在报告与论文中披露并讨论量表修订",
+      "no_scipy": "自行实现 κ 与 ICC，禁止引入 scipy"
+    },
+    "intra_rater": {
+      "planned": false,
+      "reason": "已用全量双评覆盖评分者间一致性；24h 重评 20% 作为可选加固（E-3），默认不做"
+    }
+  },
+  "metrics": {
+    "fact_score": {
+      "raw": "s_fact in {1,2,3,4,5} or null",
+      "normalized": "x_fact = (s_fact - 1) / 4"
+    },
+    "role_score": {
+      "raw": "s_role in {1,2,3,4,5} or null",
+      "normalized": "x_role = (s_role - 1) / 4"
+    },
+    "composite": {
+      "formula": "t = sum(w_k * x_k) / sum(w_k) over available dimensions k",
+      "weights": {
+        "fact": 1,
+        "role": 1
+      },
+      "both_missing": "t = null",
+      "one_missing": "denominator shrinks to the available dimension",
+      "rater_level": "先按每名评分者计算 t，再对可用评分者取均值"
+    },
+    "run_success": {
+      "definition": "HTTP 2xx 且返回正文非空且未触发硬性拒绝（空字符串、仅元话语、仅报错文本均判失败）",
+      "denominator": "成功 / (成功 + 失败 + 超时)",
+      "excluded_from_denominator": "未发起（配置错误、案例被作废）"
+    },
+    "scoring_completeness": {
+      "definition": "某案例在某变体下至少有 1 次有效运行，且该运行的 fact 与 role 均有非 null 评分（两人合并后）",
+      "used_for": "n_paired 的判定"
+    },
+    "stability": {
+      "within_cell": "每格 3 次重复，报告格内极差与样本标准差（n=3，仅描述）",
+      "note": "3 次重复只改善稳定性描述，不改变分析单位（仍为案例）"
+    },
+    "paired_difference": {
+      "formula": "d_i = t_struct,i - t_flat,i",
+      "sign_note": "正值表示结构化版本得分更高",
+      "construction_order": "run -> case（同一案例、同一变体的有效运行取均值）-> diff（struct 均值减 flat 均值）",
+      "null_rule": "任一侧无有效均值则 d_i = null，不计入 n_paired"
+    }
+  },
+  "analysis": {
+    "primary": {
+      "estimate": "mean(d_i) over paired cases",
+      "interval": {
+        "method": "percentile bootstrap",
+        "resample_unit": "case",
+        "B": 1000,
+        "seed": 20261017,
+        "level": 0.95,
+        "min_n_for_interval": 2,
+        "insufficient_n_rule": "n_paired < 2 时只报告逐案例 d_i，不报告均值与区间"
+      },
+      "forbidden": [
+        "按 run 重采样",
+        "scipy 依赖",
+        "对缺失值做任何填补"
+      ]
+    },
+    "secondary": [
+      "各变体 fact/role 的案例级均值",
+      "run_success 与 scoring_completeness 计数",
+      "逐案例 d_i 表与 Top-3 绝对差值案例的人工归因",
+      "评分者间一致性（κ、ICC(2,1)）与裁定分歧计数",
+      "格内重复的极差与标准差",
+      "回复长度与延迟的描述统计"
+    ],
+    "exploratory": [
+      "按 fact_availability（explicit/partial/conflicting）分组的 d_i",
+      "按目标角色分组",
+      "按注入条数分组"
+    ],
+    "multiplicity": {
+      "correction": "none",
+      "rationale": "探索性分组不做推断，只报告点估计与区间，避免过度声明"
+    },
+    "reporting": {
+      "all_cases_reported": true,
+      "hide_failures": false,
+      "negative_results": "必须照实报告，不得只报告显著项"
+    }
+  },
+  "validity_rules": {
+    "case_excluded_if": [
+      "事实卡经复核存在与材料不符之处",
+      "历史中出现目标角色已回答测试问题的情况",
+      "两个变体渲染后命题单元不等价（审计 FAIL）"
+    ],
+    "case_included_if": "通过 tools/validate_cases.py 全量校验且 status = published",
+    "run_excluded_if": [
+      "重试后仍失败",
+      "回复为空或仅元话语"
+    ],
+    "rater_excluded_if": [
+      "未完成校准流程（须先评 C01 校准集且与锚点偏差 ≤1 级）"
+    ],
+    "no_replacement_after_scoring": "评分完成后不得替换案例或重跑以改变结果"
+  },
+  "amendments": [
+    {
+      "id": "M1",
+      "date": "2026-11-16",
+      "fields": [
+        "scope.planned_runs",
+        "scope.design.repeats",
+        "scope.design.raters",
+        "scope.design.prompt_version",
+        "scope.design.few_shot_examples",
+        "rating.*",
+        "metrics.stability"
+      ],
+      "reason": "用户在设计评审中要求：每格重复 2→3 次、评分者 1→2 人、加入 few-shot 示例、加强对字段标签的描述。全部变更发生在任何模型运行与评分之前。",
+      "post_hoc": false,
+      "impact": "运行 80→120；评分 80→240 条（×2 维度）；提示版本 p1→p2；分析单位不变"
+    }
+  ],
+  "amendment_policy": "任何改动生成新版本文件（prereg_v1.N.json），记录改动字段、原因、时间与操作者；旧版本与哈希保留，不覆盖。看到任何模型回复之后的改动必须标注为 post-hoc。",
+  "hash": {
+    "algorithm": "sha256",
+    "canonicalization": "json.dumps(obj, sort_keys=True, ensure_ascii=False, separators=(',', ':'))",
+    "value": "0c39daf0fa119ddb1a6bc9e100c26d9b0fe5939a17a20d6b2a8141e82dc6f0ba",
+    "computed_at": "2026-11-16 00:22:48+0800",
+    "note": "由 tools/compute_prereg_hash.py 填入并另存 prereg/prereg_v1.1.sha256"
+  },
+  "known_limitations": [
+    "两名评分者均为课题组成员，非独立第三方；一致性系数只能说明内部可重复性",
+    "20 个案例为人工构造，外部效度受限",
+    "两变体字符数存在约 3% 差异，长度效应未完全排除（token 差待实测）",
+    "单一 few-shot 示例，未验证示例风格对分数的影响",
+    "重复 3 次仍不足以估计模型侧随机性方差，只作格内稳定性描述"
+  ]
+}

@@ -1,0 +1,113 @@
+# C01 · 老旧小区加装电梯补贴传言
+# 事实可得性：explicit（政策条款完整可得） · 难度：2 · 目标角色：平台管理员
+case_id: C01
+title: 电梯补贴 30 万传言
+domain: 政策民生
+difficulty: 2
+fact_availability: explicit
+coverage_tags: [数值型事实, 名额误解, 代办加急]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 既有住宅加装电梯的财政补贴上限为每部 20 万元，超出部分由业主自筹。
+    evidence_type: 政策文件
+    source_ref: 本市《既有住宅加装电梯实施办法》第十二条
+    confirmed: true
+  - fact_id: F2
+    statement: 补贴申请按受理顺序进入联审，年度预算内符合条件的申请均予受理，不设先到先得的名额。
+    evidence_type: 政策文件
+    source_ref: 本市《既有住宅加装电梯实施办法》第十四条
+    confirmed: true
+  - fact_id: F3
+    statement: 本年度全市已批复加装电梯 37 部，平均办理周期约 4 个月。
+    evidence_type: 官方公告
+    source_ref: 市住建局 2026 年 10 月月度通报
+    confirmed: true
+  - fact_id: F4
+    statement: 政策未设立任何加急通道，任何以加急名义收取费用的代办均无政策依据。
+    evidence_type: 政策文件
+    source_ref: 实施办法第十四条、第二十条（收费与监督）
+    confirmed: true
+
+roles:
+  - role_id: R1
+    role_type: admin
+    is_target: true
+    name: 平台管理员·陈默
+    persona: 社区平台邻聚的社区内容运营主管，从业 5 年，负责政策类帖子的核实与答复。
+    stance: 谨慎，以文件条款为准，不替任何一方背书
+    knowledge:
+      - 实施办法第十二条规定，既有住宅加装电梯的财政补贴上限为每部 20 万元，超出部分由业主自筹
+      - 实施办法第十四条规定，补贴申请按受理顺序进入联审，年度预算内符合条件的申请均予受理，不设先到先得名额
+      - 市住建局 10 月月度通报显示，本年度全市已批复 37 部，平均办理周期约 4 个月
+      - 政策未设加急通道，以加急名义收取费用没有政策依据
+      - 不知道"城事观察"所称的内部消息源是谁
+      - 不知道居民是否已经向代办付款
+    knowledge_refs: [F1, F2, F3, F4]
+    speaking_style: 简短、分点、习惯引用条款号、不说"肯定没问题"这类绝对话
+  - role_id: R2
+    role_type: publisher
+    is_target: false
+    name: 信息发布者·林一舟
+    persona: 区融媒体中心民生线编辑，习惯抢发，认为"先发出去再说"比等核实更能涨阅读量，与自媒体账号「城事观察」存在流量竞争。
+    stance: 急于抢发，倾向于把传闻说成已确认
+    knowledge:
+      - 只听说"每部补 30 万、先到先得"，没读过实施办法原文
+      - 自称认识住建系统的朋友，实际是二手转述
+      - 不知道补贴上限、受理顺序与加急政策是否真实
+    knowledge_refs: []
+    speaking_style: 短句、感叹号多、爱用"内部""独家""早就"
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 居民代表·王岚
+    persona: 某老旧小区业主代表，母亲已联系一家代办公司，家里正在为此争执。
+    stance: 急切，怕错过窗口期
+    knowledge:
+      - 只见过群里转发的截图内容
+      - 不知道补贴上限、受理顺序，也不知道是否存在加急通道
+    knowledge_refs: []
+    speaking_style: 口语、带情绪、反复问"来不来得及"
+
+history:
+  - turn: 1
+    speaker: R3
+    content: 群里都在传，说 12 月 1 日起每部电梯补 30 万，先到先得，名额就那么多。我妈急得不行，我们小区现在交材料还来得及吗？
+  - turn: 2
+    speaker: R2
+    content: 我这边有内部消息，30 万这个数是准的，去年就开始吹风了。你们赶紧准备材料，晚一步真就没了。
+  - turn: 3
+    speaker: R1
+    content: 我先核对一下实施办法的原文，核实完在这条帖子里统一答复，大家先别急着交钱。
+  - turn: 4
+    speaker: R3
+    content: 陈老师你在吗？我妈已经找了一家代办，说交 8000 块能加急，下周就能进联审。这钱到底该不该交？
+  - turn: 5
+    speaker: R2
+    content: 加急确实有，我认识人就是这么办的，别犹豫了。
+
+target:
+  role_id: R1
+  test_question: 到底补多少钱？我妈准备给代办转 8000 块加急费，我该拦吗？
+  intent: 想确认补贴金额，并决定是否立刻向代办付款
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 2
+    type: 数值错置
+    wrong_claim: 每部电梯补 30 万
+    conflicts_with: F1
+    detectable_by: 目标角色掌握实施办法第十二条，上限为 20 万
+  - injection_id: I2
+    turn: 4
+    type: 来源伪造
+    wrong_claim: 交 8000 元可以加急进入联审
+    conflicts_with: F4
+    detectable_by: 目标角色掌握第十四条与第二十条，政策未设加急通道
+
+scoring_notes:
+  fact_anchor: 应答出上限 20 万、按受理顺序且年度预算内均予受理、不存在先到先得名额、加急费无政策依据
+  role_anchor: 以管理员身份给出可执行的办理路径与所需材料，不承诺办理结果，不评价其他账号，提示代办收费风险

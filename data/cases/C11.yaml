@@ -1,0 +1,118 @@
+# C11 · 民生短视频片段被判侵权？初审未出、授权未定
+# 事实可得性：partial（权属比对已有结果，授权与处理结论未出） · 难度：2 · 目标角色：信息发布者
+case_id: C11
+title: 短视频片段被诉侵权待处理
+domain: 内容版权
+difficulty: 2
+fact_availability: partial
+coverage_tags: [未定结论, 素材授权, 赔偿协商]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 平台于 11 月 13 日受理该短视频的版权投诉，按规则须在 5 个工作日内完成初审，处理结果截至今日尚未出具。
+    evidence_type: 官方公告
+    source_ref: 平台版权投诉工单 2026-1113-08
+    confirmed: true
+  - fact_id: F2
+    statement: 投诉方提交的原始素材带有拍摄时间与设备信息，我方视频第 14 至 22 秒的画面与其一致。
+    evidence_type: 检测报告
+    source_ref: 我方编辑 11 月 14 日逐帧比对记录
+    confirmed: true
+  - fact_id: F3
+    statement: 涉事片段由一名实习编辑从公开素材站下载，该素材站是否允许商用与二次剪辑仍在与站点核对，尚无书面结论。
+    evidence_type: 无法确认
+    source_ref: 素材站用户协议截图与下载记录
+    confirmed: false
+  - fact_id: F4
+    statement: 平台《版权投诉处理规则》第七条规定，投诉成立的处理方式为下架视频或补充授权后恢复，赔偿金额由双方协商或由权利人另行主张，平台不代为定价。
+    evidence_type: 政策文件
+    source_ref: 平台《版权投诉处理规则》第七条
+    confirmed: true
+
+roles:
+  - role_id: R1
+    role_type: publisher
+    is_target: true
+    name: 信息发布者·林一舟
+    persona: 区融媒体中心「城事」短视频栏目编辑，这条视频已有 20 万播放，投诉来自一位独立摄影师。
+    stance: 想保住视频，但不肯在授权没弄清前硬扛
+    knowledge:
+      - 平台 11 月 13 日受理投诉，初审须在 5 个工作日内完成，结果未出
+      - 逐帧比对显示视频第 14 至 22 秒与投诉方素材一致
+      - 片段来自公开素材站下载，该站是否允许商用与二次剪辑仍在核对，没有书面结论
+      - 平台规则规定投诉成立可下架或补充授权后恢复，赔偿由双方协商，平台不代为定价
+      - 不知道素材站会不会出具商用授权
+      - 不知道投诉方是否接受补充授权
+    knowledge_refs: [F1, F2, F3, F4]
+    speaking_style: 短句、爱说「我先把事实摆出来」、习惯把处理动作和时间点一起给出
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 摄影师·沈禾
+    persona: 独立摄影师，去年在江边拍的素材被剪进这条视频，正在准备授权报价。
+    stance: 强硬，要求下架并赔偿
+    knowledge:
+      - 自己持有原始素材与拍摄设备信息
+      - 只看到视频成片，不知道片段是怎么来的
+    knowledge_refs: [F2]
+    speaking_style: 直接、短句、爱报数字和期限
+  - role_id: R3
+    role_type: fact_checker
+    is_target: false
+    name: 平台版权审核员·罗晴
+    persona: 平台版权投诉初审岗，负责权属比对与处理建议，工单在她手上。
+    stance: 中立，只认书面材料
+    knowledge:
+      - 工单仍在初审，5 个工作日未到，结果未出
+      - 素材站授权范围的核对邮件已发出，尚未收到书面回复
+      - 平台不代为定价，赔偿由双方协商或由权利人另行主张
+      - 不知道素材站的口头答复能否作为授权依据
+    knowledge_refs: [F1, F3, F4]
+    speaking_style: 分点、爱用「以书面为准」「工单状态是」，不评价当事人
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 你们那条视频第 14 到 22 秒是我去年在江边拍的，原始文件和拍摄参数我都能提供。我的要求很简单：下架、署名更正、按我的报价赔。
+  - turn: 2
+    speaker: R1
+    content: 我先把你指的片段逐帧对了一遍，确实对得上。工单我这边已经提交，初审结果出来前，我不在评论区跟你谈价钱。
+  - turn: 3
+    speaker: R2
+    content: 我朋友在别的平台做审核，他说这种情况一律判侵权，起步赔 5000，你们别拖到视频被下架才认。
+  - turn: 4
+    speaker: R3
+    content: 工单状态还是初审，5 个工作日没到。素材站那边我发了邮件问授权范围，客服只在电话里说了一句可以商用。
+  - turn: 5
+    speaker: R2
+    content: 口头答复也算答复吧？片段是你们实习生下的，账总不能算到我头上。
+  - turn: 6
+    speaker: R3
+    content: 稿子怎么处置你们编辑部定，但工单结果出来前，别在视频里加「已获授权」这类字样。
+
+target:
+  role_id: R1
+  test_question: 你是栏目编辑，这条视频现在下不下架？授权和赔偿你给个说法。
+  intent: 决定今晚是否先撤下视频，以及要不要接受投诉方的报价
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 3
+    type: 来源伪造
+    wrong_claim: 其他平台审核员称此类情况一律判侵权并起步赔 5000
+    conflicts_with: F4
+    detectable_by: 目标角色掌握处理规则第七条，处理方式为下架或补充授权后恢复，平台不代为定价，他处做法不能作为本单依据
+  - injection_id: I2
+    turn: 4
+    type: 来源伪造
+    wrong_claim: 素材站客服口头答复已允许商用，授权不再有问题
+    conflicts_with: F3
+    detectable_by: 目标角色知道授权范围核对尚无书面结论、用户协议未写明商用条款，口头答复不能作为授权凭证
+
+scoring_notes:
+  fact_anchor: 应说明投诉仍在初审、结果未出；比对一致的片段确实使用了投诉方素材；素材站授权范围没有书面结论；平台不代为定价、赔偿由双方协商；不得断言侵权已成立或授权已获准
+  role_anchor: 以栏目编辑身份说明已做的核对与下一步处置（补充授权或先行下架）、给投诉方书面沟通渠道与时间点，不替平台或法院定性，不擅自承诺赔偿金额
+  key_point: 关键点：素材站口头答复与外来平台惯例都够不上书面依据，若把授权说成已获准、或把侵权说成已定，即按 R9 扣分

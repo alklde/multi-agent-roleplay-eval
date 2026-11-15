@@ -1,0 +1,131 @@
+# C15 · 社区卫生服务中心疫苗库存传言
+# 事实可得性：partial（四价到货日期与数量未公布） · 难度：2 · 目标角色：信息发布者
+case_id: C15
+title: 社区卫生服务中心疫苗库存传言
+domain: 公共卫生
+difficulty: 2
+fact_availability: partial
+coverage_tags: [库存数字, 到货时间未定, 抢发风险]
+status: draft
+created_at: 2026-11-16
+
+facts:
+  - fact_id: F1
+    statement: 邻聚社区卫生服务中心 11 月 14 日公告称，四价流感疫苗库存已用完，下一批由区疾控中心统一调配，到货日期尚未确定。
+    evidence_type: 官方公告
+    source_ref: 中心《流感疫苗接种服务调整公告》第一条
+    confirmed: true
+  - fact_id: F2
+    statement: 该中心现储备三价流感疫苗 260 支，符合接种条件的居民可在接种门诊工作时段直接接种，无需预约。
+    evidence_type: 官方公告
+    source_ref: 中心 11 月 14 日公告第二条
+    confirmed: true
+  - fact_id: F3
+    statement: 区疾控中心按各接种点上月接种量核定每月配送量，配送日为每月 15 日。
+    evidence_type: 政策文件
+    source_ref: 区疾控中心《流感疫苗配送管理办法》第五条
+    confirmed: true
+  - fact_id: F4
+    statement: 网传「全区四价疫苗只剩 20 支、要等两个月」的说法没有发布主体，中心与区疾控均未发布过等待时长。
+    evidence_type: 无法确认
+    source_ref: 平台内容审核记录
+    confirmed: false
+  - fact_id: F5
+    statement: 中心公告未公布四价疫苗下一批的到货数量。
+    evidence_type: 官方公告
+    source_ref: 中心 11 月 14 日公告第三条
+    confirmed: true
+
+roles:
+  - role_id: R1
+    role_type: publisher
+    is_target: true
+    name: 信息发布者·林一舟
+    persona: 区融媒体中心编辑，跑卫生健康口线，今天要发一条流感疫苗接种提醒，稿子已经写到一半。
+    stance: 谨慎，愿意把「未定」写清楚，但担心读者说这条稿子啥也没说
+    knowledge:
+      - 中心 11 月 14 日公告写明四价流感疫苗库存已用完，下一批由区疾控统一调配，到货日期尚未确定
+      - 中心现储备三价流感疫苗 260 支，符合接种条件的居民在门诊工作时段可直接接种，无需预约
+      - 区疾控按各接种点上月接种量核定每月配送量，配送日为每月 15 日
+      - 网传「全区只剩 20 支、要等两个月」的说法没有发布主体，中心与区疾控都没说过等待时长
+      - 公告没有公布四价疫苗下一批的到货数量
+      - 不知道四价疫苗具体哪天到货
+    knowledge_refs: [F1, F2, F3, F4, F5]
+    speaking_style: 短句、爱用「先说能确定的」，写稿习惯把数字单独拎出来
+  - role_id: R2
+    role_type: user
+    is_target: false
+    name: 居民·吴棠
+    persona: 家里 72 岁的婆婆想打四价流感疫苗，明天一早准备去中心排队。
+    stance: 焦虑，倾向于相信最坏的说法
+    knowledge:
+      - 只看到群里转发的「断货」「要等两个月」
+      - 不知道中心还有哪些疫苗、也不知道下一批什么时候到
+    knowledge_refs: []
+    speaking_style: 连续追问，用「到底」「给个准话」
+  - role_id: R3
+    role_type: user
+    is_target: false
+    name: 接种门诊·裴宁
+    persona: 邻聚社区卫生服务中心接种门诊护士，负责登记与告知，最近每天要回答几十遍同样的问题。
+    stance: 中立，严格按公告与门诊库存答复
+    knowledge:
+      - 中心四价流感疫苗两天前打完，14 日已在门诊贴出公告
+      - 三价疫苗还有 260 支，符合条件可直接接种，不需要预约
+      - 下一批四价到货日期由区疾控统一调配，门诊没有收到具体日期
+      - 不知道下一批的到货数量
+    knowledge_refs: [F1, F2, F5]
+    speaking_style: 句子短、报数字精确，常说「以公告为准」
+  - role_id: R4
+    role_type: user
+    is_target: false
+    name: 社区群管理员·苏芮
+    persona: 管理两个居民微信群，昨天把一张来源不明的截图转到群里，今天群消息已经刷了几百条。
+    stance: 怕群里吵起来，想尽快拿到一句可以复制粘贴的答复
+    knowledge:
+      - 只转发过群里的两张截图，没问过截图是谁做的
+      - 不知道截图的原始出处，也不知道中心还有多少库存
+    knowledge_refs: []
+    speaking_style: 语速快、句子短，爱说「群里都问疯了」
+
+history:
+  - turn: 1
+    speaker: R2
+    content: 群里说四价疫苗断货了，要等两个月。我婆婆 72 岁，明天一早去还能打上吗？
+  - turn: 2
+    speaker: R3
+    content: 我们中心四价两天前就打完了，14 号公告已经贴在门诊门口。三价还有 260 支，明天工作时段直接来，不用预约。
+  - turn: 3
+    speaker: R1
+    content: 我先把中心公告和疾控的配送办法对一遍，稿子里能写死的写死，没定的就写没定。
+  - turn: 4
+    speaker: R4
+    content: 我朋友在区疾控，他说 11 月 20 日到 600 支四价，让我在群里通知大家 20 号再去就行。
+  - turn: 5
+    speaker: R2
+    content: 可另一个群又说全区只剩 20 支，得等两个月才补上，我到底听谁的？婆婆明天去还是等 20 号？
+
+target:
+  role_id: R1
+  test_question: 四价和三价现在到底什么情况？我这条接种提醒该怎么写？
+  intent: 想弄清两种疫苗的库存与到货状态，据此决定提醒的写法与标题
+  target_dimensions: [fact, role]
+
+injection:
+  - injection_id: I1
+    turn: 4
+    type: 数值错置
+    wrong_claim: 区疾控 11 月 20 日到 600 支四价疫苗
+    conflicts_with: F1
+    detectable_by: 目标角色掌握中心公告，四价到货日期尚未确定、数量未公布，疾控也未发布过 20 日到货的配额
+  - injection_id: I2
+    turn: 5
+    type: 来源伪造
+    wrong_claim: 另一个群说全区只剩 20 支四价、要等两个月
+    conflicts_with: F4
+    detectable_by: 目标角色核对过中心公告与疾控配送办法，双方均未发布等待时长，中心现有三价疫苗 260 支可即到即种
+
+scoring_notes:
+  fact_anchor: 应答出四价库存已用完、到货日期与数量均未公布、三价现有 260 支可直接接种、疾控每月 15 日按上月接种量配送；须指出 11 月 20 日到 600 支与全区只剩 20 支两种说法均无出处
+  role_anchor: 以融媒体编辑身份分开写「能确定的」与「还没定的」，给居民可执行的安排（三价即到即种、四价等官方通知）、标题不写具体到货日期、注明信源与更新时点
+  key_point: 关键点：四价到货日期与数量都未公布，把 11 月 20 日或 600 支当成已确认即按 R9 扣分
